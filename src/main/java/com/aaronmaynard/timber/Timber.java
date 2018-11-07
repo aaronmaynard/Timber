@@ -67,6 +67,42 @@ public class Timber extends JavaPlugin {
 				}
 			}
 			
+			if (args.length == 1 && args[0].equalsIgnoreCase("noCreative")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					sender.sendMessage("noCreative is currently set to " + (getConfig().getBoolean("noCreative") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
+				}
+			}
+			
+			if (args.length == 2 && args[0].equalsIgnoreCase("noCreative")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					setNoCreative(sender, args[1]);
+				}
+			}
+			
+			if (args.length == 1 && args[0].equalsIgnoreCase("axeOnly")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					sender.sendMessage("axeOnly is currently set to " + (getConfig().getBoolean("axeOnly") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
+				}
+			}
+			
+			if (args.length == 2 && args[0].equalsIgnoreCase("axeOnly")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					setAxeOnly(sender, args[1]);
+				}
+			}
+			
+			if (args.length == 1 && args[0].equalsIgnoreCase("trunkOnly")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					sender.sendMessage("trunkOnly is currently set to " + (getConfig().getBoolean("trunkOnly") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
+				}
+			}
+			
+			if (args.length == 2 && args[0].equalsIgnoreCase("trunkOnly")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					setTrunkOnly(sender, args[1]);
+				}
+			}
+			
 			
 		}
 		
@@ -88,6 +124,63 @@ public class Timber extends JavaPlugin {
 		
 		getConfig().set("onSneak", config.getOnSneak());
 		sender.sendMessage("onSneak was set to " + (getConfig().getBoolean("onSneak") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
+		saveConfig();
+		reloadConfig();
+	}
+	
+	public void setNoCreative(CommandSender sender, String setting) {
+				
+		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
+			
+			config.setNoCreative(true);
+		} else if (setting.equalsIgnoreCase("false") || setting.equalsIgnoreCase("0")) {
+
+			config.setNoCreative(false);
+		} else {
+			sender.sendMessage(ChatColor.RED + "This needs to be a boolean value!");
+			return;
+		}
+		
+		getConfig().set("noCreative", config.getNoCreative());
+		sender.sendMessage("noCreative was set to " + (getConfig().getBoolean("noCreative") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
+		saveConfig();
+		reloadConfig();
+	}
+	
+	public void setAxeOnly(CommandSender sender, String setting) {
+				
+		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
+			
+			config.setAxeOnly(true);
+		} else if (setting.equalsIgnoreCase("false") || setting.equalsIgnoreCase("0")) {
+
+			config.setAxeOnly(false);
+		} else {
+			sender.sendMessage(ChatColor.RED + "This needs to be a boolean value!");
+			return;
+		}
+		
+		getConfig().set("axeOnly", config.getAxeOnly());
+		sender.sendMessage("axeOnly was set to " + (getConfig().getBoolean("axeOnly") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
+		saveConfig();
+		reloadConfig();
+	}
+	
+	public void setTrunkOnly(CommandSender sender, String setting) {
+				
+		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
+			
+			config.setTrunkOnly(true);
+		} else if (setting.equalsIgnoreCase("false") || setting.equalsIgnoreCase("0")) {
+
+			config.setTrunkOnly(false);
+		} else {
+			sender.sendMessage(ChatColor.RED + "This needs to be a boolean value!");
+			return;
+		}
+		
+		getConfig().set("trunkOnly", config.getTrunkOnly());
+		sender.sendMessage("trunkOnly was set to " + (getConfig().getBoolean("trunkOnly") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
 		saveConfig();
 		reloadConfig();
 	}
