@@ -48,8 +48,15 @@ public class TListener implements Listener {
 	public void onBlockBreak(BlockBreakEvent e) {
 		Player player = e.getPlayer();
 
-		if (player.getGameMode() == GameMode.CREATIVE)
-			return; // must not be in creative
+		if (!player.hasPermission("timber.fell"))
+			return; // must have perms
+
+		if (noCreative) {
+		
+			if (player.getGameMode() == GameMode.CREATIVE) {
+				return; // must not be in creative
+			}
+		}	
 		
 		if (onSneak) {
 		
@@ -57,19 +64,29 @@ public class TListener implements Listener {
 				return; // must be sneaking
 			}
 		}
-
-		if (!player.hasPermission("timber.fell"))
-			return; // must have perms
+		
+		if (axeOnly) {
+		
+			boolean okay = false;
+			for (int i = 0; !okay && i < ok.length; i++)
+				okay |= player.getItemInHand().getType() == ok[i];
+			if (!okay)
+				return; // must destroy with axe
+		}
+		
+		if (trunkOnly) {
+		
+			// only from trunk
+		} else if (!trunkOnly) {
+			
+			// cut whats above
+		}
 
 		Block block = e.getBlock();
 		if (block.getType() != Material.LOG)
 			return; // must be wood
 
-		boolean okay = false;
-		for (int i = 0; !okay && i < ok.length; i++)
-			okay |= player.getItemInHand().getType() == ok[i];
-		if (!okay)
-			return; // must destroy with axe
+		
 
 		Location loc = block.getLocation();
 		World w = loc.getWorld();
@@ -100,5 +117,29 @@ public class TListener implements Listener {
 	
 	public static boolean getOnSneak() {
 		return onSneak;
+	}
+	
+	public static void setNoCreative(boolean setting) {
+		noCreative = setting;
+	}
+	
+	public static boolean getNoCreative() {
+		return noCreative;
+	}
+	
+	public static void setAxeOnly(boolean setting) {
+		axeOnly = setting;
+	}
+	
+	public static boolean getAxeOnly() {
+		return axeOnly;
+	}
+	
+	public static void setTrunkOnly(boolean setting) {
+		trunkOnly = setting;
+	}
+	
+	public static boolean getTrunkOnly() {
+		return trunkOnly;
 	}
 }
