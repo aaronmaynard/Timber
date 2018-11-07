@@ -1,0 +1,7 @@
+onSneak: true
+axeOnly: true
+noCreative: true
+trunkOnly: false
+messages: true
+onEnable: 'Some message for enable'
+onDisable: 'some disabled message'

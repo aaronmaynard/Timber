@@ -1,0 +1,27 @@
+name: Timber
+version: 1.0
+authors: [Aaron Maynard]
+main: com.aaronmaynard.timber.Timber
+prefix: Timber
+description: Chop down trees whole!
+website: http://development.aaronmaynard.com/
+commands:
+    timber:
+      description: Timber commands
+      permission-message: You do not have permission /<permission>
+permissions:
+    timber.*:
+      description: Gives access to all Timber features.
+      children:
+        timber.toggle: true
+        timber.check: true
+        timber.fell: true
+      timber.toggle:
+        description: Toggles whether or not trees may be felled.
+        default: op
+      timber.check:
+        description: Check whether trees may be felled.
+        default: true
+      timber.fell:
+        description: Felling of trees when the trunk is destroyed
+        default: true
