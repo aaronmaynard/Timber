@@ -10,7 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Timber extends JavaPlugin {
 	
 	private static boolean enabled = true;
-	TListener config = new TListener();
 	
 	@Override
 	public void onEnable() {
@@ -125,16 +124,16 @@ public class Timber extends JavaPlugin {
 				
 		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
 			
-			config.setOnSneak(true);
+			TListener.setOnSneak(true);
 		} else if (setting.equalsIgnoreCase("false") || setting.equalsIgnoreCase("0")) {
 
-			config.setOnSneak(false);
+			TListener.setOnSneak(false);
 		} else {
 			sender.sendMessage(ChatColor.RED + "This needs to be a boolean value!");
 			return;
 		}
 		
-		getConfig().set("onSneak", config.getOnSneak());
+		getConfig().set("onSneak", TListener.getOnSneak());
 		sender.sendMessage("onSneak was set to " + (getConfig().getBoolean("onSneak") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
 		saveConfig();
 		reloadConfig();
@@ -144,16 +143,16 @@ public class Timber extends JavaPlugin {
 				
 		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
 			
-			config.setNoCreative(true);
+			TListener.setNoCreative(true);
 		} else if (setting.equalsIgnoreCase("false") || setting.equalsIgnoreCase("0")) {
 
-			config.setNoCreative(false);
+			TListener.setNoCreative(false);
 		} else {
 			sender.sendMessage(ChatColor.RED + "This needs to be a boolean value!");
 			return;
 		}
 		
-		getConfig().set("noCreative", config.getNoCreative());
+		getConfig().set("noCreative", TListener.getNoCreative());
 		sender.sendMessage("noCreative was set to " + (getConfig().getBoolean("noCreative") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
 		saveConfig();
 		reloadConfig();
@@ -163,16 +162,16 @@ public class Timber extends JavaPlugin {
 				
 		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
 			
-			config.setAxeOnly(true);
+			TListener.setAxeOnly(true);
 		} else if (setting.equalsIgnoreCase("false") || setting.equalsIgnoreCase("0")) {
 
-			config.setAxeOnly(false);
+			TListener.setAxeOnly(false);
 		} else {
 			sender.sendMessage(ChatColor.RED + "This needs to be a boolean value!");
 			return;
 		}
 		
-		getConfig().set("axeOnly", config.getAxeOnly());
+		getConfig().set("axeOnly", TListener.getAxeOnly());
 		sender.sendMessage("axeOnly was set to " + (getConfig().getBoolean("axeOnly") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
 		saveConfig();
 		reloadConfig();
@@ -182,16 +181,16 @@ public class Timber extends JavaPlugin {
 				
 		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
 			
-			config.setTrunkOnly(true);
+			TListener.setTrunkOnly(true);
 		} else if (setting.equalsIgnoreCase("false") || setting.equalsIgnoreCase("0")) {
 
-			config.setTrunkOnly(false);
+			TListener.setTrunkOnly(false);
 		} else {
 			sender.sendMessage(ChatColor.RED + "This needs to be a boolean value!");
 			return;
 		}
 		
-		getConfig().set("trunkOnly", config.getTrunkOnly());
+		getConfig().set("trunkOnly", TListener.getTrunkOnly());
 		sender.sendMessage("trunkOnly was set to " + (getConfig().getBoolean("trunkOnly") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
 		saveConfig();
 		reloadConfig();
@@ -201,16 +200,16 @@ public class Timber extends JavaPlugin {
 				
 		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
 			
-			config.setThickTrees(true);
+			TListener.setThickTrees(true);
 		} else if (setting.equalsIgnoreCase("false") || setting.equalsIgnoreCase("0")) {
 
-			config.setThickTrees(false);
+			TListener.setThickTrees(false);
 		} else {
 			sender.sendMessage(ChatColor.RED + "This needs to be a boolean value!");
 			return;
 		}
 		
-		getConfig().set("thickTrees", config.getThickTrees());
+		getConfig().set("thickTrees", TListener.getThickTrees());
 		sender.sendMessage("thickTrees was set to " + (getConfig().getBoolean("thickTrees") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
 		saveConfig();
 		reloadConfig();
