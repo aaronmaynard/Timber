@@ -37,13 +37,13 @@ public class TListener implements Listener {
 		}
 		// Checks blocks on current y plane
 		for (int i = 0; i < dx.length; i++)
-			if (w.getBlockAt(x + dx[i], y, z + dz[i]).getType() == Material.LOG)
+			if (w.getBlockAt(x + dx[i], y, z + dz[i]).getType() == Material.LOG || w.getBlockAt(x + dx[i], y, z + dz[i]).getType() == Material.LOG_2)
 				chop(w, x + dx[i], y, z + dz[i]);
 		// Checks block above
-		if (w.getBlockAt(x, y + 1, z).getType() == Material.LOG)
+		if (w.getBlockAt(x, y + 1, z).getType() == Material.LOG || w.getBlockAt(x, y + 1, z).getType() == Material.LOG_2)
 			chop(w, x, y + 1, z);
 		// Checks block below
-		if (w.getBlockAt(x, y - 1, z).getType() == Material.LOG)
+		if (w.getBlockAt(x, y - 1, z).getType() == Material.LOG || w.getBlockAt(x, y - 1, z).getType() == Material.LOG_2)
 			chop(w, x, y - 1, z);
 	}
 
@@ -80,7 +80,7 @@ public class TListener implements Listener {
 		}
 		
 		Block block = e.getBlock();
-		if (block.getType() != Material.LOG)
+		if (block.getType() != Material.LOG || block.getType() != Material.LOG_2)
 			return; // must be wood
 		
 		Location loc = block.getLocation();
@@ -89,7 +89,7 @@ public class TListener implements Listener {
 		if (!thickTrees) {
 		
 			for (int i = 0; i < dx.length; i++) {
-				if (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i]).getType() == Material.LOG) {
+				if (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i]).getType() == Material.LOG || w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i]).getType() == Material.LOG_2) {
 					return; // disable cutting of thick trees
 				}
 			}
