@@ -17,6 +17,12 @@ public class Timber extends JavaPlugin {
 
 		getConfig().options().copyDefaults(true);
 		saveConfig();
+		TListener.setAxeOnly(getConfig().getBoolean("axeOnly"));
+		TListener.setMessages(getConfig().getBoolean("messages"));
+		TListener.setNoCreative(getConfig().getBoolean("noCreative"));
+		TListener.setOnSneak(getConfig().getBoolean("onSneak"));
+		TListener.setThickTrees(getConfig().getBoolean("thickTrees"));
+		TListener.setTrunkOnly(getConfig().getBoolean("trunkOnly"));
 
 	}
 
@@ -58,6 +64,40 @@ public class Timber extends JavaPlugin {
 				}
 			}
 
+			if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+
+				reloadConfig();
+			}
+
+			if (args.length == 1 && args[0].equalsIgnoreCase("rules")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					sender.sendMessage(ChatColor.GOLD + "These are the current rules of Timber: " + ChatColor.RESET);
+					sender.sendMessage("Timber plugin is currently "
+							+ (enabled ? ChatColor.GREEN + "enabled" : ChatColor.RED + "disabled") + ChatColor.RESET
+							+ ".");
+					sender.sendMessage("onSneak is currently set to "
+							+ (getConfig().getBoolean("onSneak") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
+							+ ChatColor.RESET + ".");
+					sender.sendMessage("noCreative is currently set to "
+							+ (getConfig().getBoolean("noCreative") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
+							+ ChatColor.RESET + ".");
+					sender.sendMessage("axeOnly is currently set to "
+							+ (getConfig().getBoolean("axeOnly") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
+							+ ChatColor.RESET + ".");
+					sender.sendMessage("trunkOnly is currently set to "
+							+ (getConfig().getBoolean("trunkOnly") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
+							+ ChatColor.RESET + ".");
+					sender.sendMessage("thickTrees is currently set to "
+							+ (getConfig().getBoolean("thickTrees") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
+							+ ChatColor.RESET + ".");
+					sender.sendMessage("messages is currently set to "
+							+ (getConfig().getBoolean("messages") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
+							+ ChatColor.RESET + ".");
+					sender.sendMessage(ChatColor.GOLD + "===========================================" + ChatColor.RESET);
+					
+				}
+			}
+
 			if (args.length == 1 && args[0].equalsIgnoreCase("onsneak")) {
 				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
 					sender.sendMessage("onSneak is currently set to "
@@ -75,8 +115,7 @@ public class Timber extends JavaPlugin {
 			if (args.length == 1 && args[0].equalsIgnoreCase("noCreative")) {
 				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
 					sender.sendMessage("noCreative is currently set to "
-							+ (getConfig().getBoolean("noCreative") ? ChatColor.GREEN + "true"
-									: ChatColor.RED + "false")
+							+ (getConfig().getBoolean("noCreative") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
 							+ ChatColor.RESET + ".");
 				}
 			}
@@ -118,8 +157,7 @@ public class Timber extends JavaPlugin {
 			if (args.length == 1 && args[0].equalsIgnoreCase("thickTrees")) {
 				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
 					sender.sendMessage("thickTrees is currently set to "
-							+ (getConfig().getBoolean("thickTrees") ? ChatColor.GREEN + "true"
-									: ChatColor.RED + "false")
+							+ (getConfig().getBoolean("thickTrees") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
 							+ ChatColor.RESET + ".");
 				}
 			}
@@ -127,6 +165,20 @@ public class Timber extends JavaPlugin {
 			if (args.length == 2 && args[0].equalsIgnoreCase("thickTrees")) {
 				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
 					setThickTrees(sender, args[1]);
+				}
+			}
+
+			if (args.length == 1 && args[0].equalsIgnoreCase("messages")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					sender.sendMessage("messages is currently set to "
+							+ (getConfig().getBoolean("messages") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
+							+ ChatColor.RESET + ".");
+				}
+			}
+
+			if (args.length == 2 && args[0].equalsIgnoreCase("messages")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					setMessages(sender, args[1]);
 				}
 			}
 
@@ -235,6 +287,27 @@ public class Timber extends JavaPlugin {
 		getConfig().set("thickTrees", TListener.getThickTrees());
 		sender.sendMessage("thickTrees was set to "
 				+ (getConfig().getBoolean("thickTrees") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
+				+ ChatColor.RESET + ".");
+		saveConfig();
+		reloadConfig();
+	}
+
+	public void setMessages(CommandSender sender, String setting) {
+
+		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
+
+			TListener.setMessages(true);
+		} else if (setting.equalsIgnoreCase("false") || setting.equalsIgnoreCase("0")) {
+
+			TListener.setMessages(false);
+		} else {
+			sender.sendMessage(ChatColor.RED + "This needs to be a boolean value!");
+			return;
+		}
+
+		getConfig().set("messages", TListener.getMessages());
+		sender.sendMessage("messages was set to "
+				+ (getConfig().getBoolean("messages") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
 				+ ChatColor.RESET + ".");
 		saveConfig();
 		reloadConfig();

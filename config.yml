@@ -2,6 +2,5 @@ onSneak: true
 axeOnly: true
 noCreative: true
 trunkOnly: false
+thickTrees: true
 messages: true
-onEnable: 'Some message for enable'
-onDisable: 'some disabled message'
