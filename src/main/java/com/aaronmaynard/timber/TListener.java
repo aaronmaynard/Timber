@@ -68,9 +68,11 @@ public class TListener implements Listener {
 			}
 		}
 		
+		boolean okay = false;
+		
 		if (axeOnly) {
 		
-			boolean okay = false;
+			
 			for (int i = 0; !okay && i < ok.length; i++)
 				okay |= player.getItemInHand().getType() == ok[i];
 			if (!okay)
@@ -84,15 +86,6 @@ public class TListener implements Listener {
 		Location loc = block.getLocation();
 		World w = loc.getWorld();
 		
-		if (trunkOnly) {
-			if (w.getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ()).getType() == Material.LOG) {
-				return; // only from trunk
-			}
-		} else if (!trunkOnly) {
-			
-			// cut whats above
-		}
-		
 		if (!thickTrees) {
 		
 			for (int i = 0; i < dx.length; i++) {
@@ -101,7 +94,9 @@ public class TListener implements Listener {
 				}
 			}
 		}
-
+		
+		
+		// leaves check
 		okay = false;
 		for (int dy = 1; !okay && dy < 9; dy++)
 			for (int i = 0; !okay && i < dx.length; i++)
@@ -110,6 +105,15 @@ public class TListener implements Listener {
 		if (!okay)
 			return;
 
+		
+		if (trunkOnly) {
+			if (w.getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ()).getType() != Material.DIRT) {
+				return; // A log was detected below
+			}
+		} else if (!trunkOnly) {
+			
+			// It doesnt matter that a log is below
+		}
 		// All checks passed
 		chop(w, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
 	}
