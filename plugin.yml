@@ -11,7 +11,7 @@ commands:
       permission-message: You do not have permission /<permission>
 permissions:
     timber.*:
-      description: Gives access to all Timber features.
+      description: Type /timber [help|?] for commands.
       children:
         timber.toggle: true
         timber.check: true

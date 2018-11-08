@@ -17,7 +17,7 @@ public class TListener implements Listener {
 	
 	private Timber plugin;
 	// defaults
-	private static boolean onSneak, axeOnly, noCreative, trunkOnly, thickTrees, messages;
+	private static boolean onSneak, axeOnly, allowCreative, trunkOnly, thickTrees, messages;
 	private static String onActivation, onDeactivation;
 
 	public TListener(Timber instance) {
@@ -66,7 +66,7 @@ public class TListener implements Listener {
 			return; // must have perms
 		}
 
-		if (noCreative) {
+		if (!allowCreative) {
 		
 			if (player.getGameMode() == GameMode.CREATIVE) {
 				return; // must not be in creative
@@ -180,12 +180,12 @@ public class TListener implements Listener {
 		return onSneak;
 	}
 	
-	public static void setNoCreative(boolean setting) {
-		noCreative = setting;
+	public static void setAllowCreative(boolean setting) {
+		allowCreative = setting;
 	}
 	
-	public static boolean getNoCreative() {
-		return noCreative;
+	public static boolean getAllowCreative() {
+		return allowCreative;
 	}
 	
 	public static void setAxeOnly(boolean setting) {
