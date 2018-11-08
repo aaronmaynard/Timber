@@ -103,6 +103,18 @@ public class Timber extends JavaPlugin {
 				}
 			}
 			
+			if (args.length == 1 && args[0].equalsIgnoreCase("thickTrees")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					sender.sendMessage("thickTrees is currently set to " + (getConfig().getBoolean("thickTrees") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
+				}
+			}
+			
+			if (args.length == 2 && args[0].equalsIgnoreCase("thickTrees")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					setThickTrees(sender, args[1]);
+				}
+			}
+			
 			
 		}
 		
@@ -181,6 +193,25 @@ public class Timber extends JavaPlugin {
 		
 		getConfig().set("trunkOnly", config.getTrunkOnly());
 		sender.sendMessage("trunkOnly was set to " + (getConfig().getBoolean("trunkOnly") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
+		saveConfig();
+		reloadConfig();
+	}
+	
+	public void setThickTrees(CommandSender sender, String setting) {
+				
+		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
+			
+			config.setThickTrees(true);
+		} else if (setting.equalsIgnoreCase("false") || setting.equalsIgnoreCase("0")) {
+
+			config.setThickTrees(false);
+		} else {
+			sender.sendMessage(ChatColor.RED + "This needs to be a boolean value!");
+			return;
+		}
+		
+		getConfig().set("thickTrees", config.getThickTrees());
+		sender.sendMessage("thickTrees was set to " + (getConfig().getBoolean("thickTrees") ? ChatColor.GREEN + "true" : ChatColor.RED + "false") + ChatColor.RESET + ".");
 		saveConfig();
 		reloadConfig();
 	}
