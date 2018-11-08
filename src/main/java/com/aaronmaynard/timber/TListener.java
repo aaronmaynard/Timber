@@ -15,7 +15,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 public class TListener implements Listener {
 	
 	private Timber plugin;
-	private static boolean onSneak, axeOnly, noCreative, trunkOnly, messages;
+	private static boolean onSneak, axeOnly, noCreative, trunkOnly, thickTrees, messages;
 	private String onEnable, onDisable;
 
 	public TListener(Timber instance) {
@@ -35,11 +35,14 @@ public class TListener implements Listener {
 			plugin.getLogger().warning("Could not break wood block at (" + x + ", " + y + ", " + z + ")!");
 			return;
 		}
+		// Checks blocks on current y plane
 		for (int i = 0; i < dx.length; i++)
 			if (w.getBlockAt(x + dx[i], y, z + dz[i]).getType() == Material.LOG)
 				chop(w, x + dx[i], y, z + dz[i]);
+		// Checks block above
 		if (w.getBlockAt(x, y + 1, z).getType() == Material.LOG)
 			chop(w, x, y + 1, z);
+		// Checks block below
 		if (w.getBlockAt(x, y - 1, z).getType() == Material.LOG)
 			chop(w, x, y - 1, z);
 	}
@@ -74,30 +77,30 @@ public class TListener implements Listener {
 				return; // must destroy with axe
 		}
 		
-		if (trunkOnly) {
+		Block block = e.getBlock();
+		if (block.getType() != Material.LOG)
+			return; // must be wood
 		
-			// only from trunk
+		Location loc = block.getLocation();
+		World w = loc.getWorld();
+		
+		if (trunkOnly) {
+			if (w.getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ()).getType() == Material.LOG) {
+				return; // only from trunk
+			}
 		} else if (!trunkOnly) {
 			
 			// cut whats above
 		}
-
-		Block block = e.getBlock();
-		if (block.getType() != Material.LOG)
-			return; // must be wood
-
 		
-
-		Location loc = block.getLocation();
-		World w = loc.getWorld();
-
-		if (w.getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ()).getType() == Material.LOG)
-			return; // bottom block only
-
-		for (int i = 0; i < dx.length; i++)
-			if (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i])
-					.getType() == Material.LOG)
-				return; // cannot be surrounded by wood
+		if (!thickTrees) {
+		
+			for (int i = 0; i < dx.length; i++) {
+				if (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i]).getType() == Material.LOG) {
+					return; // disable cutting of thick trees
+				}
+			}
+		}
 
 		okay = false;
 		for (int dy = 1; !okay && dy < 9; dy++)
@@ -141,5 +144,13 @@ public class TListener implements Listener {
 	
 	public static boolean getTrunkOnly() {
 		return trunkOnly;
+	}
+	
+	public static void setThickTrees(boolean setting) {
+		thickTrees = setting;
+	}
+	
+	public static boolean getThickTrees() {
+		return thickTrees;
 	}
 }
