@@ -15,7 +15,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 public class TListener implements Listener {
 	
 	private Timber plugin;
-	private static boolean onSneak, axeOnly, noCreative, trunkOnly, messages;
+	private static boolean onSneak, axeOnly, noCreative, trunkOnly, thickTrees, messages;
 	private String onEnable, onDisable;
 
 	public TListener(Timber instance) {
@@ -35,11 +35,14 @@ public class TListener implements Listener {
 			plugin.getLogger().warning("Could not break wood block at (" + x + ", " + y + ", " + z + ")!");
 			return;
 		}
+		// Checks blocks on current y plane
 		for (int i = 0; i < dx.length; i++)
 			if (w.getBlockAt(x + dx[i], y, z + dz[i]).getType() == Material.LOG)
 				chop(w, x + dx[i], y, z + dz[i]);
+		// Checks block above
 		if (w.getBlockAt(x, y + 1, z).getType() == Material.LOG)
 			chop(w, x, y + 1, z);
+		// Checks block below
 		if (w.getBlockAt(x, y - 1, z).getType() == Material.LOG)
 			chop(w, x, y - 1, z);
 	}
@@ -48,8 +51,15 @@ public class TListener implements Listener {
 	public void onBlockBreak(BlockBreakEvent e) {
 		Player player = e.getPlayer();
 
-		if (player.getGameMode() == GameMode.CREATIVE)
-			return; // must not be in creative
+		if (!player.hasPermission("timber.fell"))
+			return; // must have perms
+
+		if (noCreative) {
+		
+			if (player.getGameMode() == GameMode.CREATIVE) {
+				return; // must not be in creative
+			}
+		}	
 		
 		if (onSneak) {
 		
@@ -57,30 +67,40 @@ public class TListener implements Listener {
 				return; // must be sneaking
 			}
 		}
-
-		if (!player.hasPermission("timber.fell"))
-			return; // must have perms
-
+		
+		if (axeOnly) {
+		
+			boolean okay = false;
+			for (int i = 0; !okay && i < ok.length; i++)
+				okay |= player.getItemInHand().getType() == ok[i];
+			if (!okay)
+				return; // must destroy with axe
+		}
+		
 		Block block = e.getBlock();
 		if (block.getType() != Material.LOG)
 			return; // must be wood
-
-		boolean okay = false;
-		for (int i = 0; !okay && i < ok.length; i++)
-			okay |= player.getItemInHand().getType() == ok[i];
-		if (!okay)
-			return; // must destroy with axe
-
+		
 		Location loc = block.getLocation();
 		World w = loc.getWorld();
-
-		if (w.getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ()).getType() == Material.LOG)
-			return; // bottom block only
-
-		for (int i = 0; i < dx.length; i++)
-			if (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i])
-					.getType() == Material.LOG)
-				return; // cannot be surrounded by wood
+		
+		if (trunkOnly) {
+			if (w.getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ()).getType() == Material.LOG) {
+				return; // only from trunk
+			}
+		} else if (!trunkOnly) {
+			
+			// cut whats above
+		}
+		
+		if (!thickTrees) {
+		
+			for (int i = 0; i < dx.length; i++) {
+				if (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i]).getType() == Material.LOG) {
+					return; // disable cutting of thick trees
+				}
+			}
+		}
 
 		okay = false;
 		for (int dy = 1; !okay && dy < 9; dy++)
@@ -100,5 +120,37 @@ public class TListener implements Listener {
 	
 	public static boolean getOnSneak() {
 		return onSneak;
+	}
+	
+	public static void setNoCreative(boolean setting) {
+		noCreative = setting;
+	}
+	
+	public static boolean getNoCreative() {
+		return noCreative;
+	}
+	
+	public static void setAxeOnly(boolean setting) {
+		axeOnly = setting;
+	}
+	
+	public static boolean getAxeOnly() {
+		return axeOnly;
+	}
+	
+	public static void setTrunkOnly(boolean setting) {
+		trunkOnly = setting;
+	}
+	
+	public static boolean getTrunkOnly() {
+		return trunkOnly;
+	}
+	
+	public static void setThickTrees(boolean setting) {
+		thickTrees = setting;
+	}
+	
+	public static boolean getThickTrees() {
+		return thickTrees;
 	}
 }
