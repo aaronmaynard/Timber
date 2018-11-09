@@ -5,7 +5,7 @@ Recreation of the legendary, but discontinued Timber Mod.  This version is a plu
 ~~Permission Based~~  
 ~~Configuration File(s)~~  
 ~~Info Panel~~    
-Help Command  
+~~Help Command~~  
 *Plugin Toggles*  
 - ~~only while sneaking~~  
 - ~~only while holding axe~~  
