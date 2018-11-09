@@ -4,3 +4,5 @@ noCreative: true
 trunkOnly: false
 thickTrees: true
 messages: true
+onActivation: 'You prepare for a mighty timber'
+onDeactivation: 'You relax just a bit'

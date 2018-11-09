@@ -23,6 +23,8 @@ public class Timber extends JavaPlugin {
 		TListener.setOnSneak(getConfig().getBoolean("onSneak"));
 		TListener.setThickTrees(getConfig().getBoolean("thickTrees"));
 		TListener.setTrunkOnly(getConfig().getBoolean("trunkOnly"));
+		TListener.setOnActivation(getConfig().getString("onActivation"));
+		TListener.setOnDeactivation(getConfig().getString("onDeactivation"));
 
 	}
 
@@ -67,6 +69,15 @@ public class Timber extends JavaPlugin {
 			if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
 
 				reloadConfig();
+				TListener.setAxeOnly(getConfig().getBoolean("axeOnly"));
+				TListener.setMessages(getConfig().getBoolean("messages"));
+				TListener.setNoCreative(getConfig().getBoolean("noCreative"));
+				TListener.setOnSneak(getConfig().getBoolean("onSneak"));
+				TListener.setThickTrees(getConfig().getBoolean("thickTrees"));
+				TListener.setTrunkOnly(getConfig().getBoolean("trunkOnly"));
+				TListener.setOnActivation(getConfig().getString("onActivation"));
+				TListener.setOnDeactivation(getConfig().getString("onDeactivation"));
+				sender.sendMessage(ChatColor.GOLD + "The Timber configuration has been reloaded" + ChatColor.RESET);
 			}
 
 			if (args.length == 1 && args[0].equalsIgnoreCase("rules")) {

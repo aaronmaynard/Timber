@@ -18,6 +18,7 @@ public class TListener implements Listener {
 	private Timber plugin;
 	// defaults
 	private static boolean onSneak, axeOnly, noCreative, trunkOnly, thickTrees, messages;
+	private static String onActivation, onDeactivation;
 
 	public TListener(Timber instance) {
 		plugin = instance;
@@ -153,7 +154,7 @@ public class TListener implements Listener {
 		    	  for (int i = 0; i < axes.length; i++) {
 		    		  PlayerInventory inv = player.getInventory();
 		    		  if(inv.getItemInMainHand().getType().equals(axes[i])){
-		    			  player.sendMessage("You relax just a bit");
+		    			  player.sendMessage(onDeactivation);
 		    		  }
 							
 		    	  }
@@ -162,7 +163,7 @@ public class TListener implements Listener {
 		    	  for (int i = 0; i < axes.length; i++) {
 		    		  PlayerInventory inv = player.getInventory();
 		    		  if(inv.getItemInMainHand().getType().equals(axes[i])){
-		    			  player.sendMessage("You prepare for a mighty timber");
+		    			  player.sendMessage(onActivation);
 		    		  }
 							
 		    	  }
@@ -217,5 +218,13 @@ public class TListener implements Listener {
 	
 	public static boolean getMessages() {
 		return messages;
+	}
+	
+	public static void setOnActivation(String setting) {
+		onActivation = setting;
+	}
+	
+	public static void setOnDeactivation(String setting) {
+		onDeactivation = setting;
 	}
 }
