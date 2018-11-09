@@ -3,6 +3,6 @@ axeOnly: true
 thickTrees: true
 trunkOnly: false
 messages: true
-noCreative: true
+allowCreative: true
 onActivation: 'You prepare for a mighty timber'
 onDeactivation: 'You relax just a bit'
