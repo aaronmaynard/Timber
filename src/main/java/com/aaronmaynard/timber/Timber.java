@@ -82,16 +82,16 @@ public class Timber extends JavaPlugin {
 
 			if (args.length == 1 && args[0].equalsIgnoreCase("help") || args.length == 1 && args[0].equalsIgnoreCase("?")) {
 				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
-					sender.sendMessage(ChatColor.GOLD + "Timber Plugin by Aaron Maynard aka The_Illusi0nist" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.GREEN + "====================================================" + ChatColor.RESET);
 					sender.sendMessage(ChatColor.AQUA + "Timber Commands - /timber <command> [flag]" + ChatColor.RESET);
-					sender.sendMessage(ChatColor.GOLD + "toggle" + ChatColor.RESET + " : Toggles the plugin on/off");
-					sender.sendMessage(ChatColor.GOLD + "onsneak" + ChatColor.RESET + " : Should the player have to crouch in order to fell? [true|false]");
-					sender.sendMessage(ChatColor.GOLD + "axeonly" + ChatColor.RESET + " : Should only axes be allowed to work? [true|false]");
-					sender.sendMessage(ChatColor.GOLD + "thicktrees" + ChatColor.RESET + " : Should players be able to fell thicker trees? [true/false]");
-					sender.sendMessage(ChatColor.GOLD + "trunkonly" + ChatColor.RESET + " : Should trees be able to be felled from only the trunk? [true|false]");
-					sender.sendMessage(ChatColor.GOLD + "messages" + ChatColor.RESET + " : onSneak and axeOnly must also be set true to receive messages. [true|false]");
-					sender.sendMessage(ChatColor.GOLD + "allowcreative" + ChatColor.RESET + " : Should players in Creative mode be allowed to use Timber? [true|false]");
-					sender.sendMessage(ChatColor.GOLD + "====================================================" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "toggle" + ChatColor.RESET + " : Toggles the plugin on/off");
+					sender.sendMessage(ChatColor.DARK_RED + "onsneak" + ChatColor.RESET + " : Players must sneak in order to fell - " + ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "axeonly" + ChatColor.RESET + " : Only axes work - " + ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "thicktrees" + ChatColor.RESET + " : Thicc trees can be felled - " + ChatColor.AQUA + "[true/false]" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "trunkonly" + ChatColor.RESET + " : Only chopping the trunk will fell - " + ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "messages" + ChatColor.RESET + " : onSneak & axeOnly must be set true - " + ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "allowcreative" + ChatColor.RESET + " : Players in creative can fell - " + ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.GREEN + "====================================================" + ChatColor.RESET);
 					
 				}
 			}
