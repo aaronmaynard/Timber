@@ -11,6 +11,11 @@ public class Timber extends JavaPlugin {
 
 	private static boolean enabled = true;
 
+	/**
+	 * Called when the plugin is enabled
+	 * 
+	 * @author Aaron Maynard
+	 */
 	@Override
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(new TListener(this), this);
@@ -28,6 +33,14 @@ public class Timber extends JavaPlugin {
 
 	}
 
+	/**
+	 * Executes the given command, returning its success
+	 * 
+	 * @param sender Source of the command
+	 * @param cmd    Command which was executed
+	 * @param label  Alias of the command which was used
+	 * @param args   Passed command arguments
+	 */
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
@@ -80,19 +93,51 @@ public class Timber extends JavaPlugin {
 				sender.sendMessage(ChatColor.GOLD + "The Timber configuration has been reloaded" + ChatColor.RESET);
 			}
 
-			if (args.length == 1 && args[0].equalsIgnoreCase("help") || args.length == 1 && args[0].equalsIgnoreCase("?")) {
+			if (args.length == 1 && args[0].equalsIgnoreCase("help")
+					|| args.length == 1 && args[0].equalsIgnoreCase("?")) {
 				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
-					sender.sendMessage(ChatColor.GREEN + "====================================================" + ChatColor.RESET);
+					sender.sendMessage(
+							ChatColor.GREEN + "====================================================" + ChatColor.RESET);
 					sender.sendMessage(ChatColor.AQUA + "Timber Commands - /timber <command> [flag]" + ChatColor.RESET);
-					sender.sendMessage(ChatColor.DARK_RED + "toggle" + ChatColor.RESET + " : Toggles the plugin on/off");
-					sender.sendMessage(ChatColor.DARK_RED + "onsneak" + ChatColor.RESET + " : Players must sneak in order to fell - " + ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
-					sender.sendMessage(ChatColor.DARK_RED + "axeonly" + ChatColor.RESET + " : Only axes work - " + ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
-					sender.sendMessage(ChatColor.DARK_RED + "thicktrees" + ChatColor.RESET + " : Thicc trees can be felled - " + ChatColor.AQUA + "[true/false]" + ChatColor.RESET);
-					sender.sendMessage(ChatColor.DARK_RED + "trunkonly" + ChatColor.RESET + " : Only chopping the trunk will fell - " + ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
-					sender.sendMessage(ChatColor.DARK_RED + "messages" + ChatColor.RESET + " : onSneak & axeOnly must be set true - " + ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
-					sender.sendMessage(ChatColor.DARK_RED + "allowcreative" + ChatColor.RESET + " : Players in creative can fell - " + ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
-					sender.sendMessage(ChatColor.GREEN + "====================================================" + ChatColor.RESET);
-					
+					sender.sendMessage(
+							ChatColor.DARK_RED + "toggle" + ChatColor.RESET + " : Toggles the plugin on/off");
+					sender.sendMessage(ChatColor.DARK_RED + "onsneak" + ChatColor.RESET
+							+ " : Players must sneak in order to fell - " + ChatColor.AQUA + "[true|false]"
+							+ ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "axeonly" + ChatColor.RESET + " : Only axes work - "
+							+ ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "thicktrees" + ChatColor.RESET
+							+ " : Thicc trees can be felled - " + ChatColor.AQUA + "[true/false]" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "trunkonly" + ChatColor.RESET
+							+ " : Only chopping the trunk will fell - " + ChatColor.AQUA + "[true|false]"
+							+ ChatColor.RESET);
+					sender.sendMessage(ChatColor.GREEN + "Type /help 2 for more commands" + ChatColor.RESET);
+					sender.sendMessage(
+							ChatColor.GREEN + "====================================================" + ChatColor.RESET);
+
+				}
+			}
+
+			if ((args.length == 2 && args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("2"))
+					|| (args.length == 2 && args[0].equalsIgnoreCase("?") && args[1].equalsIgnoreCase("2"))) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					sender.sendMessage(
+							ChatColor.GREEN + "====================================================" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.AQUA + "Timber Commands - /timber <command> [flag]" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "allowcreative" + ChatColor.RESET
+							+ " : Players in creative can fell - " + ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "messages" + ChatColor.RESET
+							+ " : onSneak & axeOnly must be set true - " + ChatColor.AQUA + "[true|false]"
+							+ ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "onactivation" + ChatColor.RESET
+							+ " : message displayed when ready to fell - " + ChatColor.AQUA + "[String]"
+							+ ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "ondeactivation" + ChatColor.RESET
+							+ " : message displayed when done felling - " + ChatColor.AQUA + "[String]"
+							+ ChatColor.RESET);
+					sender.sendMessage(
+							ChatColor.GREEN + "====================================================" + ChatColor.RESET);
+
 				}
 			}
 
@@ -109,7 +154,8 @@ public class Timber extends JavaPlugin {
 							+ (getConfig().getBoolean("axeOnly") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
 							+ ChatColor.RESET + ".");
 					sender.sendMessage("thickTrees is currently set to "
-							+ (getConfig().getBoolean("thickTrees") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
+							+ (getConfig().getBoolean("thickTrees") ? ChatColor.GREEN + "true"
+									: ChatColor.RED + "false")
 							+ ChatColor.RESET + ".");
 					sender.sendMessage("trunkOnly is currently set to "
 							+ (getConfig().getBoolean("trunkOnly") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
@@ -118,10 +164,12 @@ public class Timber extends JavaPlugin {
 							+ (getConfig().getBoolean("messages") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
 							+ ChatColor.RESET + ".");
 					sender.sendMessage("allowCreative is currently set to "
-							+ (getConfig().getBoolean("allowCreative") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
+							+ (getConfig().getBoolean("allowCreative") ? ChatColor.GREEN + "true"
+									: ChatColor.RED + "false")
 							+ ChatColor.RESET + ".");
-					sender.sendMessage(ChatColor.GOLD + "===========================================" + ChatColor.RESET);
-					
+					sender.sendMessage(
+							ChatColor.GOLD + "===========================================" + ChatColor.RESET);
+
 				}
 			}
 
@@ -142,14 +190,15 @@ public class Timber extends JavaPlugin {
 			if (args.length == 1 && args[0].equalsIgnoreCase("allowCreative")) {
 				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
 					sender.sendMessage("allowCreative is currently set to "
-							+ (getConfig().getBoolean("allowCreative") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
+							+ (getConfig().getBoolean("allowCreative") ? ChatColor.GREEN + "true"
+									: ChatColor.RED + "false")
 							+ ChatColor.RESET + ".");
 				}
 			}
 
 			if (args.length == 2 && args[0].equalsIgnoreCase("allowCreative")) {
 				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
-					setNoCreative(sender, args[1]);
+					setAllowCreative(sender, args[1]);
 				}
 			}
 
@@ -184,7 +233,8 @@ public class Timber extends JavaPlugin {
 			if (args.length == 1 && args[0].equalsIgnoreCase("thickTrees")) {
 				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
 					sender.sendMessage("thickTrees is currently set to "
-							+ (getConfig().getBoolean("thickTrees") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
+							+ (getConfig().getBoolean("thickTrees") ? ChatColor.GREEN + "true"
+									: ChatColor.RED + "false")
 							+ ChatColor.RESET + ".");
 				}
 			}
@@ -214,6 +264,12 @@ public class Timber extends JavaPlugin {
 		return false;
 	}
 
+	/**
+	 * Sets the flag onSneak to a boolean value
+	 * 
+	 * @param sender  the entity that sent the command
+	 * @param setting the boolean value that toggles the flag
+	 */
 	public void setOnSneak(CommandSender sender, String setting) {
 
 		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
@@ -235,7 +291,13 @@ public class Timber extends JavaPlugin {
 		reloadConfig();
 	}
 
-	public void setNoCreative(CommandSender sender, String setting) {
+	/**
+	 * Sets the flag allowCreative to a boolean value
+	 * 
+	 * @param sender  the entity that sent the command
+	 * @param setting the boolean value that toggles the flag
+	 */
+	public void setAllowCreative(CommandSender sender, String setting) {
 
 		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
 
@@ -256,6 +318,12 @@ public class Timber extends JavaPlugin {
 		reloadConfig();
 	}
 
+	/**
+	 * Sets the flag axeOnly to a boolean value
+	 * 
+	 * @param sender  the entity that sent the command
+	 * @param setting the boolean value that toggles the flag
+	 */
 	public void setAxeOnly(CommandSender sender, String setting) {
 
 		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
@@ -277,6 +345,12 @@ public class Timber extends JavaPlugin {
 		reloadConfig();
 	}
 
+	/**
+	 * Sets the flag trunkOnly to a boolean value
+	 * 
+	 * @param sender  the entity that sent the command
+	 * @param setting the boolean value that toggles the flag
+	 */
 	public void setTrunkOnly(CommandSender sender, String setting) {
 
 		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
@@ -298,6 +372,12 @@ public class Timber extends JavaPlugin {
 		reloadConfig();
 	}
 
+	/**
+	 * Sets the flag thickTrees to a boolean value
+	 * 
+	 * @param sender  the entity that sent the command
+	 * @param setting the boolean value that toggles the flag
+	 */
 	public void setThickTrees(CommandSender sender, String setting) {
 
 		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
@@ -319,6 +399,12 @@ public class Timber extends JavaPlugin {
 		reloadConfig();
 	}
 
+	/**
+	 * Sets the flag messages to a boolean value
+	 * 
+	 * @param sender  the entity that sent the command
+	 * @param setting the boolean value that toggles the flag
+	 */
 	public void setMessages(CommandSender sender, String setting) {
 
 		if (setting.equalsIgnoreCase("true") || setting.equalsIgnoreCase("1")) {
@@ -336,6 +422,38 @@ public class Timber extends JavaPlugin {
 		sender.sendMessage("messages was set to "
 				+ (getConfig().getBoolean("messages") ? ChatColor.GREEN + "true" : ChatColor.RED + "false")
 				+ ChatColor.RESET + ".");
+		saveConfig();
+		reloadConfig();
+	}
+
+	/**
+	 * Sets the onActivation message to a given string
+	 * 
+	 * @param sender  the entity that sent the command
+	 * @param setting the string value for onActivation
+	 */
+	public void setOnActivation(CommandSender sender, String setting) {
+
+		TListener.setOnActivation(setting);
+
+		getConfig().set("onActivation", TListener.getOnActivation());
+		sender.sendMessage("onActivation was set to " + getConfig().getString("onActivation"));
+		saveConfig();
+		reloadConfig();
+	}
+
+	/**
+	 * Sets the onDeactivation message to a given string
+	 * 
+	 * @param sender  the entity that sent the command
+	 * @param setting the string value for onDeactivation
+	 */
+	public void setOnDeactivation(CommandSender sender, String setting) {
+
+		TListener.setOnDeactivation(setting);
+
+		getConfig().set("onDeactivation", TListener.getOnDeactivation());
+		sender.sendMessage("onDeactivation was set to " + getConfig().getString("onDeactivation"));
 		saveConfig();
 		reloadConfig();
 	}
