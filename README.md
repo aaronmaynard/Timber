@@ -15,5 +15,11 @@ Recreation of the legendary, but discontinued Timber Mod.  This version is a plu
 
 Backwards compatability or just different releases?
 
+![Timber](https://i.imgur.com/1wrsgkW.jpg)
+ 
+![Help 1](https://i.imgur.com/GT25bgH.jpg)
+  
+![Help 2](https://i.imgur.com/DUINbdm.jpg)
+
 ### Known Bugs
 Dark Oak and Acacia Logs dont fell.
