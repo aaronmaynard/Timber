@@ -1,19 +1,29 @@
 # Timber
 Recreation of the legendary, but discontinued Timber Mod.  This version is a plugin for Craftbukkit servers.
 
-###To-Do:  
-~~Permission Based~~  
-~~Configuration File(s)~~  
-~~Info Panel~~    
-~~Help Command~~  
-*Plugin Toggles*  
-- ~~only while sneaking~~  
-- ~~only while holding axe~~  
-- ~~only while in survival (like)~~  
-- ~~cut thick trees~~  
-- ~~custom messages~~  
+Timber Bukkit Plugin
 
-Backwards compatability or just different releases?
+### Features:  
+Configurable settings  
+Custom messages  
+Permissions  
+
+### Example Configuration:  
+**onSneak**: true  
+**axeOnly**: true  
+**thickTrees**: true  
+**trunkOnly**: false  
+**messages**: true  
+**allowCreative**: true  
+**onActivation**: 'You prepare for a mighty timber'  
+**onDeactivation**: 'You relax just a bit'  
+
+### Permission:  
+**timber.***  -  Gives access to all timber functionality  
+**timber.toggle**  -  Gives access to flag modification  
+**timber.check**  -  Check whether or not trees may be felled  
+**timber.fell**  -  Felling of trees when the trunk is destroyed  
+Plugin defaults to OP  
 
 ![Timber](https://i.imgur.com/1wrsgkW.jpg)
  
@@ -21,5 +31,5 @@ Backwards compatability or just different releases?
   
 ![Help 2](https://i.imgur.com/DUINbdm.jpg)
 
-### Known Bugs
-Dark Oak and Acacia Logs dont fell.
+### Known Bugs  
+Dark Oak and Acacia Logs dont fell. :(  
