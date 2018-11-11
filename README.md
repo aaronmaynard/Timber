@@ -1,5 +1,13 @@
 # Timber
-Recreation of the legendary, but discontinued Timber Mod.  This version is a plugin for Craftbukkit servers.  Download from the  [Spigot Resource](https://www.spigotmc.org/resources/timber.62261/ "Spigot Resource Link") page!
+Recreation of the legendary, but discontinued Timber Mod.  This version is a plugin for Craftbukkit servers.  
+
+**Download**  
+Download from the  [Spigot Resource](https://www.spigotmc.org/resources/timber.62261/ "Spigot Resource Link") page for the most up to date version!  
+
+**Alternate Downloads:**  
+Minecraft 1.12: https://github.com/aaronmaynard/Timber/releases/tag/v1.2  
+Minecraft 1.13: TBR  
+
 
 Timber Bukkit Plugin
 
