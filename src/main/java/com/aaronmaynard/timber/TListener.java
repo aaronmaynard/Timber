@@ -19,6 +19,8 @@ import org.bukkit.inventory.PlayerInventory;
  *
  */
 public class TListener implements Listener {
+	
+	HotbarMessager hbm = new HotbarMessager();
 
 	private Timber plugin;
 	// defaults
@@ -166,16 +168,17 @@ public class TListener implements Listener {
 	/**
 	 * Registers an event when the player activates sneak
 	 * @param e on sneak event
+	 * @throws Exception unable to send hotbar message
 	 */
 	@EventHandler
-	public void onPlayerToggleSneakEvent(PlayerToggleSneakEvent e) {
+	public void onPlayerToggleSneakEvent(PlayerToggleSneakEvent e) throws Exception {
 		if (onSneak && axeOnly && messages) {
 			Player player = e.getPlayer();
 			if (player.isSneaking()) {
 				for (int i = 0; i < axes.length; i++) {
 					PlayerInventory inv = player.getInventory();
 					if (inv.getItemInMainHand().getType().equals(axes[i])) {
-						player.sendMessage(onDeactivation);
+						HotbarMessager.sendHotBarMessage(player, onDeactivation);
 					}
 
 				}
@@ -184,7 +187,7 @@ public class TListener implements Listener {
 				for (int i = 0; i < axes.length; i++) {
 					PlayerInventory inv = player.getInventory();
 					if (inv.getItemInMainHand().getType().equals(axes[i])) {
-						player.sendMessage(onActivation);
+						HotbarMessager.sendHotBarMessage(player, onActivation);
 					}
 
 				}
