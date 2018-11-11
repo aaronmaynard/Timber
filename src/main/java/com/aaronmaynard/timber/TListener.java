@@ -1,5 +1,6 @@
 package com.aaronmaynard.timber;
 
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,8 +21,6 @@ import org.bukkit.inventory.PlayerInventory;
  */
 public class TListener implements Listener {
 	
-	HotbarMessager hbm = new HotbarMessager();
-
 	private Timber plugin;
 	// defaults
 	private static boolean onSneak, axeOnly, allowCreative, trunkOnly, thickTrees, messages;
@@ -178,7 +177,7 @@ public class TListener implements Listener {
 				for (int i = 0; i < axes.length; i++) {
 					PlayerInventory inv = player.getInventory();
 					if (inv.getItemInMainHand().getType().equals(axes[i])) {
-						HotbarMessager.sendHotBarMessage(player, onDeactivation);
+						HotbarMessager.sendHotBarMessage(player, ChatColor.translateAlternateColorCodes('&', onDeactivation));
 					}
 
 				}
@@ -187,7 +186,7 @@ public class TListener implements Listener {
 				for (int i = 0; i < axes.length; i++) {
 					PlayerInventory inv = player.getInventory();
 					if (inv.getItemInMainHand().getType().equals(axes[i])) {
-						HotbarMessager.sendHotBarMessage(player, onActivation);
+						HotbarMessager.sendHotBarMessage(player, ChatColor.translateAlternateColorCodes('&', onActivation));
 					}
 
 				}

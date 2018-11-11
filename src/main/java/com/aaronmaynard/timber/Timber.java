@@ -259,6 +259,26 @@ public class Timber extends JavaPlugin {
 				}
 			}
 
+			if (args.length >= 2 && args[0].equalsIgnoreCase("onactivation")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					String message = "";
+					for(int i = 1; i < args.length; i++) {
+						message = message + args[i] + " ";
+					}
+					setOnActivation(sender, message);
+				}
+			}
+
+			if (args.length >= 2 && args[0].equalsIgnoreCase("ondeactivation")) {
+				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
+					String message = "";
+					for(int i = 1; i < args.length; i++) {
+						message = message + args[i] + " ";
+					}
+					setOnDeactivation(sender, message);
+				}
+			}
+
 		}
 
 		return false;
@@ -437,7 +457,7 @@ public class Timber extends JavaPlugin {
 		TListener.setOnActivation(setting);
 
 		getConfig().set("onActivation", TListener.getOnActivation());
-		sender.sendMessage("onActivation was set to " + getConfig().getString("onActivation"));
+		sender.sendMessage("onActivation was set to " + ChatColor.translateAlternateColorCodes('&', getConfig().getString("onActivation")));
 		saveConfig();
 		reloadConfig();
 	}
@@ -453,7 +473,7 @@ public class Timber extends JavaPlugin {
 		TListener.setOnDeactivation(setting);
 
 		getConfig().set("onDeactivation", TListener.getOnDeactivation());
-		sender.sendMessage("onDeactivation was set to " + getConfig().getString("onDeactivation"));
+		sender.sendMessage("onDeactivation was set to " + ChatColor.translateAlternateColorCodes('&', getConfig().getString("onDeactivation")));
 		saveConfig();
 		reloadConfig();
 	}
