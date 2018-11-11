@@ -30,6 +30,3 @@ Plugin defaults to OP
 ![Help 1](https://i.imgur.com/GT25bgH.jpg)
   
 ![Help 2](https://i.imgur.com/DUINbdm.jpg)
-
-### Known Bugs  
-Dark Oak and Acacia Logs dont fell. :(  
