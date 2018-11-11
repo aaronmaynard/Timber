@@ -55,6 +55,7 @@ public class TListener implements Listener {
 	 * @param z variable position in the current world
 	 */
 	private void fell(World w, int x, int y, int z) {
+		
 		if (!w.getBlockAt(x, y, z).breakNaturally()) {
 			plugin.getLogger().warning("Could not break wood block at (" + x + ", " + y + ", " + z + ")!");
 			return;
@@ -62,17 +63,17 @@ public class TListener implements Listener {
 		// Checks blocks on current y plane
 		// for (int j = 0; j < logs.length; j++) {
 		for (int i = 0; i < dx.length; i++) {
-			if (w.getBlockAt(x + dx[i], y, z + dz[i]).getType() == Material.LOG) {
+			if (w.getBlockAt(x + dx[i], y, z + dz[i]).getType() == Material.LOG || w.getBlockAt(x + dx[i], y, z + dz[i]).getType() == Material.LOG_2) {
 				fell(w, x + dx[i], y, z + dz[i]);
 			}
 		}
 
 		// Checks block above
-		if (w.getBlockAt(x, y + 1, z).getType() == Material.LOG) {
+		if (w.getBlockAt(x, y + 1, z).getType() == Material.LOG || w.getBlockAt(x, y + 1, z).getType() == Material.LOG_2) {
 			fell(w, x, y + 1, z);
 		}
 		// Checks block below
-		if (w.getBlockAt(x, y - 1, z).getType() == Material.LOG) {
+		if (w.getBlockAt(x, y - 1, z).getType() == Material.LOG || w.getBlockAt(x, y - 1, z).getType() == Material.LOG_2) {
 			fell(w, x, y - 1, z);
 		}
 		// }
@@ -110,10 +111,9 @@ public class TListener implements Listener {
 		World w = loc.getWorld();
 
 		// for (int j = 0; j < logs.length; j++) {
-		if (block.getType() != Material.LOG) {
+		if (block.getType() != Material.LOG && block.getType() != Material.LOG_2) {
 			return; // must be wood
 		}
-
 		// }
 
 		if (axeOnly) {
@@ -131,8 +131,7 @@ public class TListener implements Listener {
 
 			// for (int j = 0; j < logs.length; j++) {
 			for (int i = 0; i < dx.length; i++) {
-				if (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i])
-						.getType() == Material.LOG) {
+				if (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i]).getType() == Material.LOG || w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i]).getType() == Material.LOG_2) {
 					return; // disable cutting of thick trees
 				}
 			}
@@ -144,14 +143,13 @@ public class TListener implements Listener {
 		for (int dy = 1; !okay && dy < 9; dy++) {
 			// for (int k = 0; k < leaves.length; k++) {
 			for (int i = 0; !okay && i < dx.length; i++) {
-				okay |= w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY() + dy, loc.getBlockZ() + dz[i])
-						.getType() == Material.LEAVES; // must have leaves somewhere nearby
+				okay |= (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY() + dy, loc.getBlockZ() + dz[i]).getType() == Material.LEAVES || w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY() + dy, loc.getBlockZ() + dz[i]).getType() == Material.LEAVES_2); // must have leaves somewhere nearby
 			}
 			// }
 		}
 		if (!okay)
 			return;
-
+		
 		if (trunkOnly) {
 			if (w.getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ()).getType() != Material.DIRT) {
 				return; // A log was detected below
