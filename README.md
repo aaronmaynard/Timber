@@ -1,5 +1,5 @@
 # Timber
-Recreation of the legendary, but discontinued Timber Mod.  This version is a plugin for Craftbukkit servers.
+Recreation of the legendary, but discontinued Timber Mod.  This version is a plugin for Craftbukkit servers.  Download from the  [Spigot Resource](https://www.spigotmc.org/resources/timber.62261/ "Spigot Resource Link") page!
 
 Timber Bukkit Plugin
 
