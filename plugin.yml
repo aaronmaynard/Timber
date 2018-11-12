@@ -1,4 +1,5 @@
 name: Timber
+api-version: 1.13
 version: 2.0
 authors: [Aaron Maynard]
 main: com.aaronmaynard.timber.Timber
