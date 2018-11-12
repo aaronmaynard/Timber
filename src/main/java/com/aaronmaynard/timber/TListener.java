@@ -42,10 +42,9 @@ public class TListener implements Listener {
 	}
 
 	static int dx[] = { 0, 0, -1, 1 }, dz[] = { -1, 1, 0, 0 };
-	static Material[] axes = { Material.WOOD_AXE, Material.STONE_AXE, Material.IRON_AXE, Material.GOLD_AXE,
-			Material.DIAMOND_AXE };
-	// static Material[] logs = { Material.LOG, Material.LOG_2};
-	// static Material[] leaves = { Material.LEAVES, Material.LEAVES_2};
+	static Material[] axes = {Material.DIAMOND_AXE, Material.GOLDEN_AXE, Material.IRON_AXE, Material.STONE_AXE, Material.WOODEN_AXE, Material.LEGACY_DIAMOND_AXE, Material.LEGACY_GOLD_AXE, Material.LEGACY_IRON_AXE, Material.LEGACY_STONE_AXE, Material.LEGACY_WOOD_AXE};
+	static Material[] logs = {Material.ACACIA_LOG, Material.BIRCH_LOG, Material.DARK_OAK_LOG, Material.JUNGLE_LOG, Material.LEGACY_LOG, Material.LEGACY_LOG_2, Material.OAK_LOG, Material.SPRUCE_LOG, Material.STRIPPED_ACACIA_LOG, Material.STRIPPED_BIRCH_LOG, Material.STRIPPED_DARK_OAK_LOG, Material.STRIPPED_JUNGLE_LOG, Material.STRIPPED_OAK_LOG, Material.STRIPPED_SPRUCE_LOG};
+	static Material[] leaves = {Material.ACACIA_LEAVES, Material.BIRCH_LEAVES, Material.DARK_OAK_LEAVES, Material.JUNGLE_LEAVES, Material.LEGACY_LEAVES, Material.LEGACY_LEAVES_2, Material.OAK_LEAVES, Material.SPRUCE_LEAVES};
 
 	/**
 	 * Recursively finds the log blocks to fell
@@ -61,22 +60,22 @@ public class TListener implements Listener {
 			return;
 		}
 		// Checks blocks on current y plane
-		// for (int j = 0; j < logs.length; j++) {
-		for (int i = 0; i < dx.length; i++) {
-			if (w.getBlockAt(x + dx[i], y, z + dz[i]).getType() == Material.LOG || w.getBlockAt(x + dx[i], y, z + dz[i]).getType() == Material.LOG_2) {
-				fell(w, x + dx[i], y, z + dz[i]);
+		for (int j = 0; j < logs.length; j++) {
+			for (int i = 0; i < dx.length; i++) {
+				if (w.getBlockAt(x + dx[i], y, z + dz[i]).getType() == logs[j]) {
+					fell(w, x + dx[i], y, z + dz[i]);
+				}
+			}
+	
+			// Checks block above
+			if (w.getBlockAt(x, y + 1, z).getType() == logs[j]) {
+				fell(w, x, y + 1, z);
+			}
+			// Checks block below
+			if (w.getBlockAt(x, y - 1, z).getType() == logs[j]) {
+				fell(w, x, y - 1, z);
 			}
 		}
-
-		// Checks block above
-		if (w.getBlockAt(x, y + 1, z).getType() == Material.LOG || w.getBlockAt(x, y + 1, z).getType() == Material.LOG_2) {
-			fell(w, x, y + 1, z);
-		}
-		// Checks block below
-		if (w.getBlockAt(x, y - 1, z).getType() == Material.LOG || w.getBlockAt(x, y - 1, z).getType() == Material.LOG_2) {
-			fell(w, x, y - 1, z);
-		}
-		// }
 	}
 
 	/**
@@ -105,19 +104,28 @@ public class TListener implements Listener {
 			}
 		}
 
-		boolean okay = false;
 		Block block = e.getBlock();
 		Location loc = block.getLocation();
 		World w = loc.getWorld();
 
-		// for (int j = 0; j < logs.length; j++) {
-		if (block.getType() != Material.LOG && block.getType() != Material.LOG_2) {
-			return; // must be wood
+		/*
+		 * Log Checker
+		 */
+		boolean okay = false;
+		for (int j = 0; j < logs.length; j++) {
+			if (block.getType() == logs[j]) {
+				okay = true;
+			}
 		}
-		// }
+		if (!okay) {
+			return; // Must be some type of log
+		}
 
+		/*
+		 * Axe Checker
+		 */
+		okay = false;
 		if (axeOnly) {
-
 			PlayerInventory inv = player.getInventory();
 			for (int i = 0; !okay && i < axes.length; i++) {
 				okay |= inv.getItemInMainHand().getType().equals(axes[i]);
@@ -126,36 +134,43 @@ public class TListener implements Listener {
 				return; // must destroy with axe
 			}
 		}
-
+		
+		/*
+		 * Thick Trees
+		 */
 		if (!thickTrees) {
 
-			// for (int j = 0; j < logs.length; j++) {
-			for (int i = 0; i < dx.length; i++) {
-				if (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i]).getType() == Material.LOG || w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i]).getType() == Material.LOG_2) {
-					return; // disable cutting of thick trees
+			for (int j = 0; j < logs.length; j++) {
+				for (int i = 0; i < dx.length; i++) {
+					if (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i]).getType() == logs[j]) {
+						return; // disable cutting of thick trees
+					}
 				}
 			}
-			// }
 		}
 
-		// leaves check
+		/*
+		 * Leaves Checker
+		 */
 		okay = false;
 		for (int dy = 1; !okay && dy < 9; dy++) {
-			// for (int k = 0; k < leaves.length; k++) {
-			for (int i = 0; !okay && i < dx.length; i++) {
-				okay |= (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY() + dy, loc.getBlockZ() + dz[i]).getType() == Material.LEAVES || w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY() + dy, loc.getBlockZ() + dz[i]).getType() == Material.LEAVES_2); // must have leaves somewhere nearby
+			for (int k = 0; k < leaves.length; k++) {
+				for (int i = 0; !okay && i < dx.length; i++) {
+					okay |= (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY() + dy, loc.getBlockZ() + dz[i]).getType() == leaves[k]); // must have leaves somewhere nearby
+				}
 			}
-			// }
 		}
 		if (!okay)
 			return;
 		
+		/*
+		 * Trunk Checker
+		 */
 		if (trunkOnly) {
 			if (w.getBlockAt(loc.getBlockX(), loc.getBlockY() - 1, loc.getBlockZ()).getType() != Material.DIRT) {
 				return; // A log was detected below
 			}
 		} else if (!trunkOnly) {
-
 			// It doesnt matter that a log is below
 		}
 		// All checks passed

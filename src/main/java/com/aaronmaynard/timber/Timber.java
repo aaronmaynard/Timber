@@ -98,6 +98,7 @@ public class Timber extends JavaPlugin {
 				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
 					sender.sendMessage(
 							ChatColor.GREEN + "====================================================" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.GOLD + "Timber v2.0 by The_Illusi0nist" + ChatColor.RESET);
 					sender.sendMessage(ChatColor.AQUA + "Timber Commands - /timber <command> [flag]" + ChatColor.RESET);
 					sender.sendMessage(
 							ChatColor.DARK_RED + "toggle" + ChatColor.RESET + " : Toggles the plugin on/off");
@@ -108,9 +109,6 @@ public class Timber extends JavaPlugin {
 							+ ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
 					sender.sendMessage(ChatColor.DARK_RED + "thicktrees" + ChatColor.RESET
 							+ " : Thicc trees can be felled - " + ChatColor.AQUA + "[true/false]" + ChatColor.RESET);
-					sender.sendMessage(ChatColor.DARK_RED + "trunkonly" + ChatColor.RESET
-							+ " : Only chopping the trunk will fell - " + ChatColor.AQUA + "[true|false]"
-							+ ChatColor.RESET);
 					sender.sendMessage(ChatColor.GREEN + "Type /help 2 for more commands" + ChatColor.RESET);
 					sender.sendMessage(
 							ChatColor.GREEN + "====================================================" + ChatColor.RESET);
@@ -124,6 +122,9 @@ public class Timber extends JavaPlugin {
 					sender.sendMessage(
 							ChatColor.GREEN + "====================================================" + ChatColor.RESET);
 					sender.sendMessage(ChatColor.AQUA + "Timber Commands - /timber <command> [flag]" + ChatColor.RESET);
+					sender.sendMessage(ChatColor.DARK_RED + "trunkonly" + ChatColor.RESET
+							+ " : Only chopping the trunk will fell - " + ChatColor.AQUA + "[true|false]"
+							+ ChatColor.RESET);
 					sender.sendMessage(ChatColor.DARK_RED + "allowcreative" + ChatColor.RESET
 							+ " : Players in creative can fell - " + ChatColor.AQUA + "[true|false]" + ChatColor.RESET);
 					sender.sendMessage(ChatColor.DARK_RED + "messages" + ChatColor.RESET
@@ -135,6 +136,7 @@ public class Timber extends JavaPlugin {
 					sender.sendMessage(ChatColor.DARK_RED + "ondeactivation" + ChatColor.RESET
 							+ " : message displayed when done felling - " + ChatColor.AQUA + "[String]"
 							+ ChatColor.RESET);
+					sender.sendMessage(ChatColor.GREEN + "Type /help for more commands" + ChatColor.RESET);
 					sender.sendMessage(
 							ChatColor.GREEN + "====================================================" + ChatColor.RESET);
 
