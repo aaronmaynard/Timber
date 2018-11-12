@@ -6,7 +6,7 @@ Download from the  [Spigot Resource](https://www.spigotmc.org/resources/timber.6
 
 **Alternate Downloads:**  
 Minecraft 1.12: https://github.com/aaronmaynard/Timber/releases/tag/v1.2  
-Minecraft 1.13: TBR  
+Minecraft 1.13: [https://www.spigotmc.org/resources/timber.62261/](https://www.spigotmc.org/resources/timber.62261/ "Spigot Forum Page")    
 
 
 Timber Bukkit Plugin
