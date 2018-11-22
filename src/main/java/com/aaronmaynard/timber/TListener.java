@@ -16,11 +16,12 @@ import org.bukkit.inventory.PlayerInventory;
 /**
  * 
  * Listens for activity that relates to the plugin
+ * 
  * @author Aaron Maynard
  *
  */
 public class TListener implements Listener {
-	
+
 	private Timber plugin;
 	// defaults
 	private static boolean onSneak, axeOnly, allowCreative, trunkOnly, thickTrees, messages;
@@ -28,6 +29,7 @@ public class TListener implements Listener {
 
 	/**
 	 * Attatches to the instance of the plugin
+	 * 
 	 * @param instance Timber plugin
 	 */
 	public TListener(Timber instance) {
@@ -35,26 +37,34 @@ public class TListener implements Listener {
 	}
 
 	/**
-	 *  Constructor for getters and setters
+	 * Constructor for getters and setters
 	 */
 	public TListener() {
 		// TODO Auto-generated constructor stub
 	}
 
 	static int dx[] = { 0, 0, -1, 1 }, dz[] = { -1, 1, 0, 0 };
-	static Material[] axes = {Material.DIAMOND_AXE, Material.GOLDEN_AXE, Material.IRON_AXE, Material.STONE_AXE, Material.WOODEN_AXE, Material.LEGACY_DIAMOND_AXE, Material.LEGACY_GOLD_AXE, Material.LEGACY_IRON_AXE, Material.LEGACY_STONE_AXE, Material.LEGACY_WOOD_AXE};
-	static Material[] logs = {Material.ACACIA_LOG, Material.BIRCH_LOG, Material.DARK_OAK_LOG, Material.JUNGLE_LOG, Material.LEGACY_LOG, Material.LEGACY_LOG_2, Material.OAK_LOG, Material.SPRUCE_LOG, Material.STRIPPED_ACACIA_LOG, Material.STRIPPED_BIRCH_LOG, Material.STRIPPED_DARK_OAK_LOG, Material.STRIPPED_JUNGLE_LOG, Material.STRIPPED_OAK_LOG, Material.STRIPPED_SPRUCE_LOG};
-	static Material[] leaves = {Material.ACACIA_LEAVES, Material.BIRCH_LEAVES, Material.DARK_OAK_LEAVES, Material.JUNGLE_LEAVES, Material.LEGACY_LEAVES, Material.LEGACY_LEAVES_2, Material.OAK_LEAVES, Material.SPRUCE_LEAVES};
+	static Material[] axes = { Material.DIAMOND_AXE, Material.GOLDEN_AXE, Material.IRON_AXE, Material.STONE_AXE,
+			Material.WOODEN_AXE, Material.LEGACY_DIAMOND_AXE, Material.LEGACY_GOLD_AXE, Material.LEGACY_IRON_AXE,
+			Material.LEGACY_STONE_AXE, Material.LEGACY_WOOD_AXE };
+	static Material[] logs = { Material.ACACIA_LOG, Material.BIRCH_LOG, Material.DARK_OAK_LOG, Material.JUNGLE_LOG,
+			Material.LEGACY_LOG, Material.LEGACY_LOG_2, Material.OAK_LOG, Material.SPRUCE_LOG,
+			Material.STRIPPED_ACACIA_LOG, Material.STRIPPED_BIRCH_LOG, Material.STRIPPED_DARK_OAK_LOG,
+			Material.STRIPPED_JUNGLE_LOG, Material.STRIPPED_OAK_LOG, Material.STRIPPED_SPRUCE_LOG };
+	static Material[] leaves = { Material.ACACIA_LEAVES, Material.BIRCH_LEAVES, Material.DARK_OAK_LEAVES,
+			Material.JUNGLE_LEAVES, Material.LEGACY_LEAVES, Material.LEGACY_LEAVES_2, Material.OAK_LEAVES,
+			Material.SPRUCE_LEAVES };
 
 	/**
 	 * Recursively finds the log blocks to fell
+	 * 
 	 * @param w the current world
 	 * @param x variable position in the current world
 	 * @param y variable position in the current world
 	 * @param z variable position in the current world
 	 */
 	private void fell(World w, int x, int y, int z) {
-		
+
 		if (!w.getBlockAt(x, y, z).breakNaturally()) {
 			plugin.getLogger().warning("Could not break wood block at (" + x + ", " + y + ", " + z + ")!");
 			return;
@@ -66,7 +76,7 @@ public class TListener implements Listener {
 					fell(w, x + dx[i], y, z + dz[i]);
 				}
 			}
-	
+
 			// Checks block above
 			if (w.getBlockAt(x, y + 1, z).getType() == logs[j]) {
 				fell(w, x, y + 1, z);
@@ -80,6 +90,7 @@ public class TListener implements Listener {
 
 	/**
 	 * registers an event when a player breaks a block
+	 * 
 	 * @param e block break event
 	 */
 	@EventHandler
@@ -134,7 +145,7 @@ public class TListener implements Listener {
 				return; // must destroy with axe
 			}
 		}
-		
+
 		/*
 		 * Thick Trees
 		 */
@@ -142,7 +153,8 @@ public class TListener implements Listener {
 
 			for (int j = 0; j < logs.length; j++) {
 				for (int i = 0; i < dx.length; i++) {
-					if (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i]).getType() == logs[j]) {
+					if (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY(), loc.getBlockZ() + dz[i])
+							.getType() == logs[j]) {
 						return; // disable cutting of thick trees
 					}
 				}
@@ -156,13 +168,14 @@ public class TListener implements Listener {
 		for (int dy = 1; !okay && dy < 9; dy++) {
 			for (int k = 0; k < leaves.length; k++) {
 				for (int i = 0; !okay && i < dx.length; i++) {
-					okay |= (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY() + dy, loc.getBlockZ() + dz[i]).getType() == leaves[k]); // must have leaves somewhere nearby
+					okay |= (w.getBlockAt(loc.getBlockX() + dx[i], loc.getBlockY() + dy, loc.getBlockZ() + dz[i])
+							.getType() == leaves[k]); // must have leaves somewhere nearby
 				}
 			}
 		}
 		if (!okay)
 			return;
-		
+
 		/*
 		 * Trunk Checker
 		 */
@@ -179,6 +192,7 @@ public class TListener implements Listener {
 
 	/**
 	 * Registers an event when the player activates sneak
+	 * 
 	 * @param e on sneak event
 	 * @throws Exception unable to send hotbar message
 	 */
@@ -190,7 +204,8 @@ public class TListener implements Listener {
 				for (int i = 0; i < axes.length; i++) {
 					PlayerInventory inv = player.getInventory();
 					if (inv.getItemInMainHand().getType().equals(axes[i])) {
-						HotbarMessager.sendHotBarMessage(player, ChatColor.translateAlternateColorCodes('&', onDeactivation));
+						HotbarMessager.sendHotBarMessage(player,
+								ChatColor.translateAlternateColorCodes('&', onDeactivation));
 					}
 
 				}
@@ -199,7 +214,8 @@ public class TListener implements Listener {
 				for (int i = 0; i < axes.length; i++) {
 					PlayerInventory inv = player.getInventory();
 					if (inv.getItemInMainHand().getType().equals(axes[i])) {
-						HotbarMessager.sendHotBarMessage(player, ChatColor.translateAlternateColorCodes('&', onActivation));
+						HotbarMessager.sendHotBarMessage(player,
+								ChatColor.translateAlternateColorCodes('&', onActivation));
 					}
 
 				}
@@ -210,6 +226,7 @@ public class TListener implements Listener {
 
 	/**
 	 * onSneak setter function
+	 * 
 	 * @param setting boolean value to set the flag
 	 */
 	public static void setOnSneak(boolean setting) {
@@ -218,6 +235,7 @@ public class TListener implements Listener {
 
 	/**
 	 * onSneak getter function
+	 * 
 	 * @return the value of onSneak
 	 */
 	public static boolean getOnSneak() {
@@ -226,14 +244,16 @@ public class TListener implements Listener {
 
 	/**
 	 * allowCreative setter function
+	 * 
 	 * @param setting boolean value to set the flag
 	 */
 	public static void setAllowCreative(boolean setting) {
 		allowCreative = setting;
 	}
 
-	/** 
+	/**
 	 * allowCreative getter function
+	 * 
 	 * @return the value of allowCreative
 	 */
 	public static boolean getAllowCreative() {
@@ -242,6 +262,7 @@ public class TListener implements Listener {
 
 	/**
 	 * axeOnly setter function
+	 * 
 	 * @param setting boolean value to set the flag
 	 */
 	public static void setAxeOnly(boolean setting) {
@@ -250,6 +271,7 @@ public class TListener implements Listener {
 
 	/**
 	 * axeOnly getter function
+	 * 
 	 * @return the value of axeOnly
 	 */
 	public static boolean getAxeOnly() {
@@ -258,6 +280,7 @@ public class TListener implements Listener {
 
 	/**
 	 * trunkOnly setter function
+	 * 
 	 * @param setting boolean value to set the flag
 	 */
 	public static void setTrunkOnly(boolean setting) {
@@ -266,6 +289,7 @@ public class TListener implements Listener {
 
 	/**
 	 * trunkOnly getter function
+	 * 
 	 * @return the value of trunkOnly
 	 */
 	public static boolean getTrunkOnly() {
@@ -274,6 +298,7 @@ public class TListener implements Listener {
 
 	/**
 	 * thickTrees setter function
+	 * 
 	 * @param setting boolean value to set the flag
 	 */
 	public static void setThickTrees(boolean setting) {
@@ -282,6 +307,7 @@ public class TListener implements Listener {
 
 	/**
 	 * thickTrees getter function
+	 * 
 	 * @return the value of thickTrees
 	 */
 	public static boolean getThickTrees() {
@@ -290,6 +316,7 @@ public class TListener implements Listener {
 
 	/**
 	 * messages setter function
+	 * 
 	 * @param setting boolean value to set the flag
 	 */
 	public static void setMessages(boolean setting) {
@@ -298,6 +325,7 @@ public class TListener implements Listener {
 
 	/**
 	 * messages getter function
+	 * 
 	 * @return the value of messages
 	 */
 	public static boolean getMessages() {
@@ -306,14 +334,16 @@ public class TListener implements Listener {
 
 	/**
 	 * onActivation setter function
+	 * 
 	 * @param setting the message to be displayed on activation
 	 */
 	public static void setOnActivation(String setting) {
 		onActivation = setting;
 	}
-	
+
 	/**
 	 * onActivation getter function
+	 * 
 	 * @return onActivation string value
 	 */
 	public static String getOnActivation() {
@@ -322,14 +352,16 @@ public class TListener implements Listener {
 
 	/**
 	 * onDeactivation setter function
+	 * 
 	 * @param setting the message to be displayed on deactivation
 	 */
 	public static void setOnDeactivation(String setting) {
 		onDeactivation = setting;
 	}
-	
+
 	/**
 	 * onDeactivation getter function
+	 * 
 	 * @return onDeactivation string value
 	 */
 	public static String getOnDeactivation() {

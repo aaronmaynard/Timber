@@ -7,6 +7,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * 
+ * Timber interfaces and commands
+ * 
+ * @author Aaron Maynard
+ *
+ */
 public class Timber extends JavaPlugin {
 
 	private static boolean enabled = true;
@@ -19,6 +26,7 @@ public class Timber extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(new TListener(this), this);
+		getServer().getPluginManager().registerEvents(new GUIHandler(this), this);
 
 		getConfig().options().copyDefaults(true);
 		saveConfig();
@@ -52,9 +60,24 @@ public class Timber extends JavaPlugin {
 					sender.sendMessage("Timber plugin is currently "
 							+ (enabled ? ChatColor.GREEN + "enabled" : ChatColor.RED + "disabled") + ChatColor.RESET
 							+ ".");
+					sender.sendMessage("Type " + ChatColor.DARK_AQUA + "/timber gui" + ChatColor.RESET
+							+ " for a graphical interface.");
 					return true;
 				} else {
 					return false;
+				}
+			}
+
+			if (args.length == 1 && args[0].equalsIgnoreCase("gui")) {
+
+				if (sender instanceof Player) {
+					Player player = (Player) sender;
+					boolean success = GUI.openGUI(player);
+
+					if (!success) {
+						player.sendMessage(ChatColor.RED + "omething went wrong with the GUI");
+					}
+					return true;
 				}
 			}
 
@@ -264,7 +287,7 @@ public class Timber extends JavaPlugin {
 			if (args.length >= 2 && args[0].equalsIgnoreCase("onactivation")) {
 				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
 					String message = "";
-					for(int i = 1; i < args.length; i++) {
+					for (int i = 1; i < args.length; i++) {
 						message = message + args[i] + " ";
 					}
 					setOnActivation(sender, message);
@@ -274,7 +297,7 @@ public class Timber extends JavaPlugin {
 			if (args.length >= 2 && args[0].equalsIgnoreCase("ondeactivation")) {
 				if (!(sender instanceof Player) || sender.hasPermission("timber.toggle")) {
 					String message = "";
-					for(int i = 1; i < args.length; i++) {
+					for (int i = 1; i < args.length; i++) {
 						message = message + args[i] + " ";
 					}
 					setOnDeactivation(sender, message);
@@ -459,7 +482,8 @@ public class Timber extends JavaPlugin {
 		TListener.setOnActivation(setting);
 
 		getConfig().set("onActivation", TListener.getOnActivation());
-		sender.sendMessage("onActivation was set to " + ChatColor.translateAlternateColorCodes('&', getConfig().getString("onActivation")));
+		sender.sendMessage("onActivation was set to "
+				+ ChatColor.translateAlternateColorCodes('&', getConfig().getString("onActivation")));
 		saveConfig();
 		reloadConfig();
 	}
@@ -475,7 +499,8 @@ public class Timber extends JavaPlugin {
 		TListener.setOnDeactivation(setting);
 
 		getConfig().set("onDeactivation", TListener.getOnDeactivation());
-		sender.sendMessage("onDeactivation was set to " + ChatColor.translateAlternateColorCodes('&', getConfig().getString("onDeactivation")));
+		sender.sendMessage("onDeactivation was set to "
+				+ ChatColor.translateAlternateColorCodes('&', getConfig().getString("onDeactivation")));
 		saveConfig();
 		reloadConfig();
 	}

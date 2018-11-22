@@ -5,7 +5,14 @@ import java.util.logging.Level;
  
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
- 
+
+/**
+ * 
+ * Custom API for sending messages to the hotbar
+ * 
+ * @author Zombie_Striker
+ *
+ */
 public class HotbarMessager {
  
    // These are the Class instances. Needed to get fields or methods for classes.
@@ -97,4 +104,3 @@ public class HotbarMessager {
          "[PluginConstructorAPI] [URL]https://github.com/ZombieStriker/PluginConstructorAPI[/URL]");
    }
 }
- 
