@@ -27,7 +27,7 @@ public class Timber extends JavaPlugin {
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(new TListener(this), this);
 		getServer().getPluginManager().registerEvents(new GUIHandler(this), this);
-
+		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Timber has been Enabled");
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 		TListener.setAxeOnly(getConfig().getBoolean("axeOnly"));
@@ -38,7 +38,10 @@ public class Timber extends JavaPlugin {
 		TListener.setTrunkOnly(getConfig().getBoolean("trunkOnly"));
 		TListener.setOnActivation(getConfig().getString("onActivation"));
 		TListener.setOnDeactivation(getConfig().getString("onDeactivation"));
+	}
 
+	public void onDisable() {
+		getServer().getConsoleSender().sendMessage(ChatColor.RED + "Timber has been Disabled");
 	}
 
 	/**
